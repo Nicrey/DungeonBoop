@@ -63,11 +63,11 @@ class Canvas:
                 if x_start + border_size < x < x_end-border_size and y_start + border_size < y < y_end -border_size:
                     continue
                 # When color switches
-                if self.dungeon_pixels[x, y] not in SETTINGS.get_dungeon_colors() and not remove:
-                    self.check_neighbors_for_add(x, y)
+                if self.dungeon_pixels[x, y] != SETTINGS.get(Setting.DUNGEON_COLOR) and not remove:
+                    self.check_neighbors_for_add(x, y, self.dungeon_pixels[x,y] == SETTINGS.get(Setting.BG_COLOR))
                 if self.dungeon_pixels[x, y] in SETTINGS.get_dungeon_colors() and remove:
                     self.check_neighbors_for_remove(x, y)
-                if self.dungeon_pixels[x, y] != SETTINGS.get(Setting.BORDER_COLOR) or remove:
+                if self.bg_neighbors[x,y] == 0 or remove:
                     self.paint_pixel(x, y, color)
 
     def check_neighbors_for_remove(self, x, y):
@@ -82,22 +82,26 @@ class Canvas:
                 continue
             self.check_neighbor_pixel_for_remove(x, dy)
 
-    def check_neighbors_for_add(self, main_x, main_y):
+    def check_neighbors_for_add(self, main_x, main_y, state_change):
         self.bg_neighbors[main_x, main_y] = 0
         x_range, y_range = self.get_neighbor_ranges(main_x, main_y)
         for x in x_range:
             if x == main_x:
                 continue
-            self.check_neighbor_pixel_for_add(x, main_y)
+            if state_change:
+                self.check_neighbor_pixel_for_add(x, main_y)
             self.check_neighbor_for_bg(x, main_y, main_x, main_y)
         for y in y_range:
             if y == main_y:
                 continue
-            self.check_neighbor_pixel_for_add(main_x, y)
+            if state_change:
+                self.check_neighbor_pixel_for_add(main_x, y)
             self.check_neighbor_for_bg(main_x, y, main_x, main_y)
 
         if self.bg_neighbors[main_x, main_y] > 0:
             self.paint_pixel(main_x, main_y, SETTINGS.get(Setting.BORDER_COLOR))
+            return True
+        return False
 
     def paint_pixel(self, x, y, color):
         self.dungeon_pixels[x, y] = color
