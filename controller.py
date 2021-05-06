@@ -20,10 +20,14 @@ class Controller:
                 # pygame.quit()
                 # sys.exit()
 
-            if action.name == Actions.MOUSE_LEFT_EVENT:
+            if action.name == Actions.ADD_TILE:
                 canvas.pixel_clicked(action.values.pos, remove=False)
-            if action.name == Actions.MOUSE_RIGHT_EVENT:
+            if action.name == Actions.REMOVE_TILE:
                 canvas.pixel_clicked(action.values.pos, remove=True)
+            if action.name == Actions.INCREASE_GRID_STEP:
+                canvas.increase_grid()
+            if action.name == Actions.DECREASE_GRID_STEP:
+                canvas.decrease_grid()
         if self.resized == 'RESIZE PENDING':
             game = pygame.display.set_mode((SETTINGS.get(Setting.SCREEN_X), SETTINGS.get(Setting.SCREEN_Y)),
                                            pygame.RESIZABLE)

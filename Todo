@@ -1,12 +1,31 @@
 
 
-* Git erstellen
 * Save Function and other Keybinds (Button press instead of mouse zum zeichnen)
-* Black Border for dungeon edges
+    * Save
+    * Reset
+    * New Project
+    * Project Overview
+* Project Overview
+* DOCUMENTATION
 * Triangles for Corners?
 * Graphik Theme
 * Freehand Aftereffect
 
-
 DONE:
 * Settings as Enum
+* Git erstellen
+* Black Border for dungeon edges (Schwerer als gedacht => Eventuell nicht live sondern mit Keybind, Schwierig auch da man 1 PX border nicht sieht)
+* Keybinds:
+    * Keys to draw/remove
+    * Increase decrease grid
+* SPEED UP Big grid (by skipping unecessary neighbor steps (for middle of shape)
+
+Shortcuts Brainstorming V 0.1:
+* Hold Key instead of Mouse Buttons (A to Add, S to remove)
+* + and - to increase decrease grid size in steps of 5
+* STRG + S to save
+* STRG + R for reset
+* STRG + N new project
+* STRG + P to project overview
+
+

@@ -5,9 +5,13 @@ import pygame
 
 class Actions(Enum):
     EXIT = 0
-    MOUSE_LEFT_EVENT = 1
-    MOUSE_RIGHT_EVENT = 2
+    ADD_TILE = 1
+    REMOVE_TILE = 2
     SCREEN_RESIZE = 3
+    INCREASE_GRID_STEP = 4
+    DECREASE_GRID_STEP = 5
+    RESET = 6
+    SAVE = 7
 
 
 class Action:
@@ -16,11 +20,19 @@ class Action:
         self.values = values
 
 
-class KeybindManager():
+class KeybindManager:
     def __init__(self):
-        self.keybinds = {}
-        self.set_keybind(Actions.MOUSE_LEFT_EVENT, [pygame.MOUSEBUTTONUP])
+        self.simple_keybinds = {}
+        self.set_single_key_keybind(Actions.ADD_TILE, pygame.K_a)
+        self.set_single_key_keybind(Actions.REMOVE_TILE, pygame.K_s)
+        self.set_single_key_keybind(Actions.INCREASE_GRID_STEP, pygame.K_PLUS)
+        self.set_single_key_keybind(Actions.DECREASE_GRID_STEP, pygame.K_MINUS)
 
-    def set_keybind(self, action, keybind):
-        self.keybinds[keybind] = action
+    def set_single_key_keybind(self, action, keybind):
+        self.simple_keybinds[keybind] = action
 
+    def get_simple_bind(self, key):
+        return self.simple_keybinds[key] if key in self.simple_keybinds else None
+
+
+KEYBINDS = KeybindManager()

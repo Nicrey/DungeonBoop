@@ -47,7 +47,7 @@ while True:
     handle_action_times.append(second_time)
     handle_event_times.append(first_time)
     draw_times.append(third_time)
-    print(clock.get_fps())
+    # print(clock.get_fps())
     clock.tick(SETTINGS.get(Setting.FPS))
 
 print("Exited")
