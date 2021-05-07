@@ -1,7 +1,5 @@
 import numpy
 import pygame
-import png
-import colour
 from keybind_manager import Actions
 from setting_manager import Setting, SETTINGS
 
@@ -34,16 +32,16 @@ class Controller:
             if action.name == Actions.RESET:
                 canvas.reset()
             if action.name == Actions.SAVE:
-                self.save(canvas.get_pixels())
+                self.save(canvas.dungeon_pixels.copy(), canvas)
         if self.resized == 'RESIZE PENDING':
             game = pygame.display.set_mode((SETTINGS.get(Setting.SCREEN_X), SETTINGS.get(Setting.SCREEN_Y)),
                                            pygame.RESIZABLE)
             self.resized = 'NO RESIZE'
         return game
 
-    def save(self, pixels):
+    def save(self, pixels, canvas):
         numpy.savetxt(f'Projects/{self.current_project}/save', pixels)
-        surface = pygame.surfarray.make_surface(pixels)
+        surface = pygame.Surface((canvas.size_x, canvas.size_y))
         pygame.surfarray.blit_array(surface, pixels)
-        pygame.image.save(surface, f'Projects/{self.current_project}/save.bmp' )
+        pygame.image.save(surface, f'Projects/{self.current_project}/save.bmp')
 
