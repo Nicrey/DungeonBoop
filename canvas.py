@@ -42,6 +42,12 @@ class Canvas:
         SETTINGS.set(Setting.GRIDSIZE_SQUARE, bounded)
         self.draw_grid(old_size)
 
+    def reset(self):
+        self.dungeon_pixels[::] = SETTINGS.get(Setting.BG_COLOR)
+        self.bg_neighbors[::] = 0
+        self.draw_grid(100)
+
+
     def pixel_clicked(self, pos, remove):
         grid_size = SETTINGS.get(Setting.GRIDSIZE_SQUARE)
         border_size = SETTINGS.get(Setting.BORDER_STRENGTH) * 2

@@ -1,12 +1,12 @@
 
 
 * Save Function and other Keybinds (Button press instead of mouse zum zeichnen)
-    * Save
-    * Reset
     * New Project
     * Project Overview
 * Project Overview
 * DOCUMENTATION
+* Git Deploy und Versioning
+----- V0.1
 * Triangles for Corners?
 * Graphik Theme
 * Freehand Aftereffect
@@ -18,6 +18,8 @@ DONE:
 * Keybinds:
     * Keys to draw/remove
     * Increase decrease grid
+    * Reset
+    * Save
 * SPEED UP Big grid (by skipping unecessary neighbor steps (for middle of shape)
 
 Shortcuts Brainstorming V 0.1:

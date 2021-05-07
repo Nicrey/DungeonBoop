@@ -1,5 +1,7 @@
+import numpy
 import pygame
-
+import png
+import colour
 from keybind_manager import Actions
 from setting_manager import Setting, SETTINGS
 
@@ -7,6 +9,7 @@ from setting_manager import Setting, SETTINGS
 class Controller:
     def __init__(self):
         self.resized = "NO RESIZE"
+        self.current_project = "Test"
 
     def handle_actions(self, actions, game, canvas):
         for action in actions:
@@ -28,8 +31,19 @@ class Controller:
                 canvas.increase_grid()
             if action.name == Actions.DECREASE_GRID_STEP:
                 canvas.decrease_grid()
+            if action.name == Actions.RESET:
+                canvas.reset()
+            if action.name == Actions.SAVE:
+                self.save(canvas.get_pixels())
         if self.resized == 'RESIZE PENDING':
             game = pygame.display.set_mode((SETTINGS.get(Setting.SCREEN_X), SETTINGS.get(Setting.SCREEN_Y)),
                                            pygame.RESIZABLE)
             self.resized = 'NO RESIZE'
         return game
+
+    def save(self, pixels):
+        numpy.savetxt(f'Projects/{self.current_project}/save', pixels)
+        surface = pygame.surfarray.make_surface(pixels)
+        pygame.surfarray.blit_array(surface, pixels)
+        pygame.image.save(surface, f'Projects/{self.current_project}/save.bmp' )
+

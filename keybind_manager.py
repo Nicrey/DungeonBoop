@@ -28,8 +28,20 @@ class KeybindManager:
         self.set_single_key_keybind(Actions.INCREASE_GRID_STEP, pygame.K_PLUS)
         self.set_single_key_keybind(Actions.DECREASE_GRID_STEP, pygame.K_MINUS)
 
+        self.control_keybinds = {}
+        self.set_control_key_keybind(Actions.RESET, pygame.K_r)
+        self.set_control_key_keybind(Actions.SAVE, pygame.K_s)
+        self.alt_keybinds = {}
+        self.shift_keybinds = {}
+
     def set_single_key_keybind(self, action, keybind):
         self.simple_keybinds[keybind] = action
+
+    def set_control_key_keybind(self, action, keybind):
+        self.control_keybinds[keybind] = action
+
+    def get_control_bind(self, key):
+        return self.control_keybinds[key] if key in self.control_keybinds else None
 
     def get_simple_bind(self, key):
         return self.simple_keybinds[key] if key in self.simple_keybinds else None

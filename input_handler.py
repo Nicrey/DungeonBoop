@@ -53,8 +53,13 @@ class InputHandler:
         return actions
 
     def handle_keydown(self, event):
+        mods = pygame.key.get_mods()
+        strg = mods & pygame.KMOD_CTRL
         key = event.key
-        action = KEYBINDS.get_simple_bind(key)
+        if strg:
+            action = KEYBINDS.get_control_bind(key)
+        else:
+            action = KEYBINDS.get_simple_bind(key)
         if action == Actions.ADD_TILE:
             self.add_tile_active = True
             return Action(action, MouseData(pygame.mouse.get_pos()))
