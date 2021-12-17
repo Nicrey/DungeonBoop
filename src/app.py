@@ -2,11 +2,9 @@ import time
 import pygame
 from numpy import average
 
-import drawer
-from setting_manager import Setting, SETTINGS
-import canvas
-import controller
-from input_handler import InputHandler
+from src.Util.setting_manager import Setting, SETTINGS
+from src.Logic import canvas, controller
+from src.Logic.input_handler import InputHandler
 
 pygame.init()
 pygame.font.init()
@@ -16,7 +14,7 @@ GAME = pygame.display.set_mode((SETTINGS.get(Setting.SCREEN_X), SETTINGS.get(Set
 pygame.display.set_caption(f"{SETTINGS.get(Setting.NAME)} {SETTINGS.get(Setting.VERSION)}")
 clock = pygame.time.Clock()
 handler = InputHandler()
-controller = controller.Controller()
+controller = controller.Controller(GAME)
 # Font and Fitting Cursor
 draw_canvas = canvas.Canvas(SETTINGS.get(Setting.SCREEN_X), SETTINGS.get(Setting.SCREEN_Y))
 start_time = time.perf_counter()
@@ -25,6 +23,7 @@ start_time = time.perf_counter()
 handle_event_times = []
 handle_action_times = []
 draw_times = []
+
 while True:
     loop_start = time.perf_counter()
     ###############################################
@@ -42,12 +41,12 @@ while True:
     #                DRAWING
     ###################################################
     start = time.perf_counter()
-    drawer.draw(GAME, draw_canvas)
+    controller.draw()
     third_time = time.perf_counter() - start
     handle_action_times.append(second_time)
     handle_event_times.append(first_time)
     draw_times.append(third_time)
-    # print(clock.get_fps())
+    #print(clock.get_fps())
     clock.tick(SETTINGS.get(Setting.FPS))
 
 print("Exited")

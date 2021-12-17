@@ -1,6 +1,6 @@
 import numpy
 
-from setting_manager import Setting, SETTINGS
+from src.Util.setting_manager import Setting, SETTINGS
 from sortedcontainers import SortedList
 
 
@@ -25,8 +25,7 @@ class Canvas:
     def get_pixels(self):
         self.changed_x = SortedList()
         self.changed_y = SortedList()
-        ret = self.dungeon_pixels - self.grid
-        return ret
+        return self.dungeon_pixels - self.grid
 
     def increase_grid(self):
         self.change_grid(increase=True)
@@ -61,19 +60,23 @@ class Canvas:
         self.changed_y.add(y_start - border_size)
         self.changed_y.add(y_end + border_size)
         # Set Inner Square where we dont have to think about borders
-        self.dungeon_pixels[x_start + border_size:x_end - border_size, y_start + border_size:y_end - border_size] = color
-        self.bg_neighbors[x_start + border_size:x_end - border_size, y_start + border_size:y_end - border_size] = 0
+        x_inner = x_start + border_size
+        x_inner_end = x_end - border_size
+        y_inner = y_start + border_size
+        y_inner_end = y_end - border_size
+        self.dungeon_pixels[x_inner:x_inner_end, y_inner:y_inner_end] = color
+        self.bg_neighbors[x_inner:x_inner_end, y_inner:y_inner_end] = 0
 
         for x in range(x_start, x_end):
             for y in range(y_start, y_end):
-                if x_start + border_size < x < x_end-border_size and y_start + border_size < y < y_end -border_size:
+                if x_inner < x < x_inner_end and y_inner < y < y_inner_end:
                     continue
                 # When color switches
-                if self.dungeon_pixels[x, y] != SETTINGS.get(Setting.DUNGEON_COLOR) and not remove:
+                if not remove and self.dungeon_pixels[x, y] != SETTINGS.get(Setting.DUNGEON_COLOR):
                     self.check_neighbors_for_add(x, y, self.dungeon_pixels[x,y] == SETTINGS.get(Setting.BG_COLOR))
-                if self.dungeon_pixels[x, y] in SETTINGS.get_dungeon_colors() and remove:
+                if remove and self.dungeon_pixels[x, y] in SETTINGS.get_dungeon_colors():
                     self.check_neighbors_for_remove(x, y)
-                if self.bg_neighbors[x,y] == 0 or remove:
+                if remove or self.bg_neighbors[x,y] == 0:
                     self.paint_pixel(x, y, color)
 
     def check_neighbors_for_remove(self, x, y):

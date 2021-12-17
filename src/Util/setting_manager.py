@@ -1,5 +1,9 @@
 from enum import Enum
 
+import pygame
+
+from src.Util.file_manager import resource_path
+
 
 class Setting(Enum):
     NAME = 1
@@ -16,11 +20,16 @@ class Setting(Enum):
     GRID_STEP = 12
     GRID_MAX = 13
     GRID_MIN = 14
+    FONT_PATH = 15
+    FONT_SIZE = 16
+    FONT_COLOR = 17
+    PROJECT_BACK_COLOR = 18
 
 
 class SettingManager:
 
     def __init__(self):
+        pygame.font.init()
         self.settings = {}
         self.change_setting(Setting.NAME, 'DungeonBoop')
         self.change_setting(Setting.VERSION, '0.1')
@@ -31,11 +40,16 @@ class SettingManager:
         self.change_setting(Setting.BG_COLOR, 0x444444)
         self.change_setting(Setting.GRID_COLOR, 0x555555)
         self.change_setting(Setting.DUNGEON_COLOR, 0x999999)
+
         self.change_setting(Setting.BORDER_COLOR, 0x000000)
         self.change_setting(Setting.BORDER_STRENGTH, 2)
-        self.change_setting(Setting.GRID_STEP, 3)
+        self.change_setting(Setting.GRID_STEP, 5)
         self.change_setting(Setting.GRID_MAX, 100)
         self.change_setting(Setting.GRID_MIN, 9)
+        self.change_setting(Setting.FONT_PATH, resource_path('resources/FreeMono.otf'))
+        self.change_setting(Setting.FONT_SIZE, 45)
+        self.change_setting(Setting.FONT_COLOR, (100, 100, 255))
+        self.change_setting(Setting.PROJECT_BACK_COLOR, (0, 0, 0))
 
     def change_setting(self, key, value):
         self.settings[key] = value
@@ -48,6 +62,10 @@ class SettingManager:
 
     def get_dungeon_colors(self):
         return [self.settings[Setting.BORDER_COLOR], self.settings[Setting.DUNGEON_COLOR]]
+
+    def get_font(self):
+        print(self.settings[Setting.FONT_PATH])
+        return pygame.font.Font(self.settings[Setting.FONT_PATH], self.settings[Setting.FONT_SIZE])
 
 
 SETTINGS = SettingManager()

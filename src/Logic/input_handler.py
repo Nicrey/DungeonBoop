@@ -1,6 +1,6 @@
 import pygame
 
-from keybind_manager import Actions, Action, KEYBINDS
+from src.Util.keybind_manager import Actions, Action, KEYBINDS
 
 
 class InputHandler:
@@ -56,6 +56,7 @@ class InputHandler:
         mods = pygame.key.get_mods()
         strg = mods & pygame.KMOD_CTRL
         key = event.key
+        print(pygame.key.name(key))
         if strg:
             action = KEYBINDS.get_control_bind(key)
         else:
@@ -68,6 +69,7 @@ class InputHandler:
             return Action(action, MouseData(pygame.mouse.get_pos()))
         if action is None:
             return None
+        print(action)
         return Action(action, event)
 
     def handle_keyup(self, event):
