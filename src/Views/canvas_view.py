@@ -20,6 +20,8 @@ class CanvasView:
         max_x = changed_x[-1]
         min_y = changed_y[0]
         max_y = changed_y[-1]
+        if min_x == 0:
+            print(min_x, max_x, min_y, max_y)
         pixels = pygame.surfarray.pixels2d(self.surface)
         pixels[:] = self.canvas.get_pixels()
         update_rect = pygame.Rect(min_x, min_y, max_x - min_x, max_y - min_y)

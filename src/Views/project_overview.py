@@ -1,8 +1,4 @@
-import pygame
-
-from src.Uilib.input_text_view import InputTextView
 from src.Uilib.select_list_view import SelectListView
-from src.Util.file_manager import FILES
 from src.Util.keybind_manager import KEYBINDS, Actions
 from src.Util.setting_manager import Setting, SETTINGS
 

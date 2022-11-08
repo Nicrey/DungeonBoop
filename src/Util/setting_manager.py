@@ -2,9 +2,6 @@ from enum import Enum
 
 import pygame
 
-from src.Util.file_manager import resource_path
-
-
 class Setting(Enum):
     NAME = 1
     VERSION = 2
@@ -33,9 +30,9 @@ class SettingManager:
         self.settings = {}
         self.change_setting(Setting.NAME, 'DungeonBoop')
         self.change_setting(Setting.VERSION, '0.1')
-        self.change_setting(Setting.SCREEN_X, 1200)
-        self.change_setting(Setting.SCREEN_Y, 800)
-        self.change_setting(Setting.GRIDSIZE_SQUARE, 15)
+        self.change_setting(Setting.SCREEN_X, 1024)
+        self.change_setting(Setting.SCREEN_Y, 1024)
+        self.change_setting(Setting.GRIDSIZE_SQUARE, 16)
         self.change_setting(Setting.FPS, 240)
         self.change_setting(Setting.BG_COLOR, 0x444444)
         self.change_setting(Setting.GRID_COLOR, 0x555555)
@@ -43,9 +40,11 @@ class SettingManager:
 
         self.change_setting(Setting.BORDER_COLOR, 0x000000)
         self.change_setting(Setting.BORDER_STRENGTH, 2)
-        self.change_setting(Setting.GRID_STEP, 5)
-        self.change_setting(Setting.GRID_MAX, 100)
-        self.change_setting(Setting.GRID_MIN, 9)
+        self.change_setting(Setting.GRID_STEP, 2)
+        self.change_setting(Setting.GRID_MAX, 128)
+        self.change_setting(Setting.GRID_MIN, 8)
+        
+        from src.Util.file_manager import resource_path
         self.change_setting(Setting.FONT_PATH, resource_path('resources/FreeMono.otf'))
         self.change_setting(Setting.FONT_SIZE, 45)
         self.change_setting(Setting.FONT_COLOR, (100, 100, 255))

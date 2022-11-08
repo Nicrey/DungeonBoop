@@ -68,7 +68,7 @@ class InputHandler:
             self.remove_tile_active = True
             return Action(action, MouseData(pygame.mouse.get_pos()))
         if action is None:
-            return None
+            return Action(Actions.TEXT_INPUT, {'char': pygame.key.name(key)})
         print(action)
         return Action(action, event)
 

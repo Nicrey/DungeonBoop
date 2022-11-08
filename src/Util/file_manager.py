@@ -2,6 +2,7 @@ import os
 import sys
 
 import numpy
+import pygame
 
 from src.Model.project import Project
 
@@ -32,11 +33,23 @@ class FileManager:
     def load_project(self, name):
         # Loads all data for a project into a project class
         # Todo.md: Check if save exists, if not return empty pixels array
-        return numpy.loadtxt(f'Projects/{name}/save')
+        try:
+            save = numpy.loadtxt(f'Projects/{name}/save')
+        except FileNotFoundError:
+            
+            from src.Util.setting_manager import SETTINGS, Setting
+            save = numpy.full((SETTINGS.get(Setting.SCREEN_X), SETTINGS.get(Setting.SCREEN_Y)), SETTINGS.get(Setting.BG_COLOR))
+        return save
 
-    def save_project(self, name):
+    def save_project(self, name, pixels, surface):
         # Saves all data from a project
-        pass
+        try:
+            os.mkdir(resource_path(f'Projects/{name}'))
+            print("Project Directory created.")
+        except FileExistsError:
+            print('Project Directory already exists.')
+        numpy.savetxt(f'Projects/{name}/save', pixels)
+        pygame.image.save(surface, f'Projects/{name}/save.bmp')
 
 
 FILES = FileManager()

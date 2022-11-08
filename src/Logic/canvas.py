@@ -36,7 +36,8 @@ class Canvas:
     def change_grid(self, increase: bool):
         old_size = SETTINGS.get(Setting.GRIDSIZE_SQUARE)
         step = SETTINGS.get(Setting.GRID_STEP)
-        new = old_size + (step if increase else -step)
+        new = int(old_size * step if increase else old_size / step)
+        
         bounded = min(max(new, SETTINGS.get(Setting.GRID_MIN)), SETTINGS.get(Setting.GRID_MAX))
         SETTINGS.set(Setting.GRIDSIZE_SQUARE, bounded)
         self.draw_grid(old_size)
@@ -139,7 +140,8 @@ class Canvas:
         return range(min_x, max_x + 1), range(min_y, max_y + 1)
 
     def draw_grid(self, old_size):
-        self.grid[::old_size, ::old_size] = 0
+        print(old_size)
+        self.grid = numpy.zeros((self.size_x, self.size_y))
         grid_size = SETTINGS.get(Setting.GRIDSIZE_SQUARE)
         self.grid[::grid_size, ::grid_size] = SETTINGS.get(Setting.GRID_COLOR)
         self.changed_x.add(0)

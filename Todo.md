@@ -1,4 +1,14 @@
+Todo: 21.12.21
+* Project Overview
+View to create new Projects and open existing ones
+* Documentation and Code quality => YAPF
+* Einlesbare Config für Keybinds
+* Dreiecke für Ecken? 
+Möglichkeit auf ein Dreieck Grid umzusteigen
 
+
+
+----
 Problem: 
 New Project Input , related: Double Keybinds
 1. Input Mode für den Input Handler

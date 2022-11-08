@@ -72,7 +72,7 @@ class Controller:
             if self.current_view.name == 'NEW_PROJECT_VIEW':
                 print(action.name, action.values)
                 if action.name == Actions.TEXT_INPUT:
-                    self.current_view.add_char(actions.values['char'])
+                    self.current_view.add_char(action.values['char'])
                     continue
                 if action.name == Actions.TEXT_BACK:
                     self.current_view.back()
@@ -90,10 +90,11 @@ class Controller:
 
     def save(self, canvas):
         pixels = canvas.dungeon_pixels.copy()
-        numpy.savetxt(f'Projects/{self.current_project}/save', pixels)
+        # numpy.savetxt(f'Projects/{self.current_project.name}/save', pixels)
         surface = pygame.Surface((canvas.size_x, canvas.size_y))
         pygame.surfarray.blit_array(surface, pixels)
-        pygame.image.save(surface, f'Projects/{self.current_project}/save.bmp')
+        # pygame.image.save(surface, f'Projects/{self.current_project.name}/save.bmp')
+        FILES.save_project(self.current_project.name, pixels, surface)
 
     def draw(self):
         width, height = self.game.get_size()
@@ -117,10 +118,11 @@ class Controller:
                                           name='NEW_PROJECT_VIEW')
 
     def load_canvas_view(self, project, canvas):
-        self.current_project = project.name
+        self.current_project = project
         self.current_view = CanvasView(self.game, canvas, pixels=project.get_pixels())
 
     def create_project(self, name, canvas):
         project = Project(name)
         self.projects.append(project)
         self.current_view = CanvasView(self.game, canvas, pixels=project.get_pixels())
+        self.current_project = project
